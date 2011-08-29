@@ -1,0 +1,6 @@
+Options -Indexes
+
+# Anti-compression for streaming data to the flashplayer:
+SetOutputFilter DEFLATE
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|flv|swf)$ \
+no-gzip dont-vary

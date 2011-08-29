@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	Built with:
+   ____    ____    __  __   ______  ______  ______      ______  ____    ______     
+  /\  _`\ /\  _`\ /\ \/\ \ /\  _  \/\__  _\/\__  _\    /\  _  \/\  _`\ /\__  _\    
+  \ \,\L\_\ \ \L\_\ \ \/'/'\ \ \L\ \/_/\ \/\/_/\ \/    \ \ \L\ \ \ \L\ \/_/\ \/    
+   \/_\__ \\ \  _\L\ \ , <  \ \  __ \ \ \ \   \ \ \     \ \  __ \ \ ,__/  \ \ \    
+     /\ \L\ \ \ \L\ \ \ \\`\ \ \ \/\ \ \ \ \   \_\ \__   \ \ \/\ \ \ \/    \_\ \__ 
+     \ `\____\ \____/\ \_\ \_\\ \_\ \_\ \ \_\  /\_____\   \ \_\ \_\ \_\    /\_____\
+      \/_____/\/___/  \/_/\/_/ \/_/\/_/  \/_/  \/_____/    \/_/\/_/\/_/    \/_____/
+      
+    http://sekati.googlecode.com | Please leave this notice intact.
+ 	Copyright (c) 2008-2009 Jason M Horwitz | Sekati LLC | sekati.com. All Rights Reserved.
+-->
+<config persist="true">
+
+	<!--
+		APP is implemented to report the API Application SWF name and version
+		number.
+	-->
+	<app>
+		<name>Sekati ActionServer Demo</name>
+		<version>1.0.9</version>
+	</app>
+
+	<!--
+		PRELOAD is used by the (optional) DocumentPreloader SWF (though the
+		same config.xml is shared with API Application SWF).
+	-->
+	<preload>
+		<application>sekati_main.swf</application>
+	</preload>
+
+	<!--
+		URI is used by the API Application SWF to define the loading of
+		supported externals during the bootstrap process.
+	-->
+	<uri>
+		<crossdomain load="true">crossdomain.xml</crossdomain>
+		<data load="false">xml/data.xml</data>
+		<css load="false">css/app_style.css</css>
+	</uri>
+
+	<!--
+		OPTION is used by the API Application SWF to configure manager
+		settings during bootstrap process.
+	-->
+	<option>
+		<!--
+			Logger has 4 output modes: IDE, FIREBUG, ALL, NONE.
+		-->
+		<log target="ALL">true</log>
+		<menu verbose="true">true</menu>
+		<fullscreen>true</fullscreen>
+		<track>false</track>
+		<deeplink>false</deeplink>
+		<performance_monitor>true</performance_monitor>
+	</option>
+
+	<!--
+		CUSTOM is used by the API Application SWF to persist custom
+		configuration data as an alternative to the "uri.data" load
+		options. To make the custom node data accessible (via
+		"App.db.config.custom") you most set <config persist="true">.
+	-->
+	<custom>
+		<sockets>
+				<policy server="localhost" port="1843" /> 
+				<socket server="localhost" port="2229" channel="sekati_demo" />
+		</sockets>	
+	</custom>
+</config>

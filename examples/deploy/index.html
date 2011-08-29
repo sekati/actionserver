@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<!--
+	SEKATI API APPLICATION TEMPLATE // v1.3.5
+	MADE BY SEKATI
+			@ www.sekati.com   
+-->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>::: SEKATI API | ACTIONSERVER DEMO :::</title>
+<link rel="shortcut icon" href="favicon.ico" />
+<meta name="copyright" content="Copyright (c) 2010 Sekati LLC, sekati.com. All Rights Reserved." />
+<meta name="description" content="Sekati API | AS3 Framework" />
+<meta name="keywords" content="sekati,actionscript,as3,api,framework,flash,flex" />
+<meta name="Author" content="jason m horwitz | SEKATI" />
+<meta http-equiv="content-language" content="en" />
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+<meta name="distribution" content="global" />
+<meta name="revisit-after" content="7 days" />
+<meta name="expires" content="never" />
+<meta name="MSSmartTagsPreventParsing" content="true" />
+<meta name="doc-rights" content="Copywritten Work" />
+<meta name="doc-type" content="Presentation" />
+<meta name="rating" content="general" />
+<meta name="classification" content="Framework" />
+<script language="javascript" src="js/swfIN.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body>
+
+<div id="flash_update"><h1>Flash Player Upgrade Required</h1><br />&laquo; <a href="adobe.com/go/flashplayer" target="_blank">Update</a>&nbsp; &nbsp; | &nbsp; &nbsp;<a href="javascript:location.reload(true)">Enter</a> &raquo;</div>
+<div id="flash_seo">Content displayed to googlebot and browsers without javascript.</div>
+
+<script type="text/javascript">
+	var s = new swfIN( "sekati_actionserver_demo.swf", "sekati_actionserver_demo", "100%", "100%" );
+	//var s = new swfIN( "sekati_preloader.swf", "sekati_test", "100%", "100%" );
+	//-------------------------------------------------------------------------------------	
+	// Detect the client flashplayer version: display an update div if not capable.
+	// Use expressInstall if client supported & set automatic scrollbars below defined size.
+	//
+	// @note flashplayer v9.0.28 supports fullscreen, added/removed from stage events.
+	// @see  http://www.adobe.com/support/documentation/en/flashplayer/9/releasenotes.html#fixes_9028
+	//s.detectShowDiv( [9,0,28], "flash_update" );
+	// 
+	// @note flashplayer v9.0.115 fixes Event.RENDER invalidate() bugs for wmode's other than 'default'
+	// @see  http://www.adobe.com/support/documentation/en/flashplayer/9/releasenotes.html#fixes_90115
+	s.detectShowDiv( [9,0,115], "flash_update" );
+	s.useExpressInstall( "playerProductInstall.swf", 300, 300 );
+	s.scrollbarAt( 800, 600 );
+	//-------------------------------------------------------------------------------------
+	// FlashVars: defines the location of the "config.xml" [default: "xml/config.xml"]
+	// WARNING: query string will override the default flashvar which overrides the default location.
+	s.addVar( "conf_uri", "xml/config.xml" );
+	//s.addVar( "conf_uri", (swfIN.utils.getQueryParam("conf_uri") || 'xml/config.xml' ));
+	//-------------------------------------------------------------------------------------
+	// Movie Params
+	s.addParam( "bgcolor", "#ffffff" );
+	s.addParam( "menu", "true" );
+	s.addParam( "quality", "high" );
+	s.addParam( "scale", "noScale" );
+	s.addParam( "allowScriptAccess", "always" );
+	s.addParam( "swLiveConnect", "true" );
+	s.addParam( "allowFullScreen", "true" );	
+	//-------------------------------------------------------------------------------------
+	// Hide the SEO div & write the embed the swf.
+	s.hideSEO( "flash_seo" );
+	s.write();
+	//-------------------------------------------------------------------------------------	
+	// Include sekati mac mouse wheel support.
+	//var mousewheel = new SWFMouse( s );
+	//-------------------------------------------------------------------------------------	
+</script>
+</body>
+</html>

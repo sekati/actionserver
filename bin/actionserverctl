@@ -1,0 +1,107 @@
+#!/bin/sh
+# Sekati: actionserverctl - Control interface designed to help the administrator control the functioning of the ActionServer daemon.
+# @author jason m horwitz | sekati.com
+# Copyright (C) 2010 jason m horwitz, Sekat LLC. All Rights Reserved.
+
+NAME="ActionServerControl"
+VERSION="1.1.0"
+DEL="******************************************************"
+
+#ABS_PATH=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+
+BINDIR="/usr/local/bin/"
+ACTION_SERVER=actionserver
+IS_RUNNING=`ps waux | grep actionserver | grep -v grep | grep -v actionserverctl | wc -l | awk '{ printf $1 }'`
+PROC=`ps waux | grep actionserver | grep -v grep | grep -v actionserverctl | awk '{ printf $2 }'`
+PORT=2229
+LOG="/tmp/actionserver.log"
+
+POLICY_SERVER=socketpolicyserver
+POLICY_IS_RUNNING=`ps waux | grep socketpolicyserver | grep -v grep | wc -l | awk '{ printf $1 }'`
+POLICY_PROC=`ps waux | grep socketpolicyserver | grep -v grep | awk '{ printf $2 }'`
+POLICY_PORT=1843
+POLICY_LOG="/tmp/socketpolicy.log"
+
+printHeader() {
+        echo "\n$DEL\n$NAME v$VERSION\n$DEL\n"
+}
+
+printUsage() {
+        echo "Usage: $0 { start | stop | status | log }\n"
+}
+
+# die [goodbye_message]
+die() {
+        echo $@
+        exit 1
+}
+
+
+printHeader
+
+
+case $1 in
+	start)
+	if [ "$POLICY_IS_RUNNING" -eq "1" ] ; then
+		echo "ERROR: Socket Policy Server daemon is already running."
+	else
+		echo "* Starting Socket Policy Server on port $PORT."
+		cd $BINDIR
+		perl -wT $POLICY_SERVER > /dev/null &
+		echo "... Socket Policy Server Daemonized!\n\n"
+	fi		
+	echo "Starting ActionServer on port: $PORT...\n"
+	echo "" > $LOG
+	if [ "$IS_RUNNING" -eq "1" ] ; then
+		echo "ERROR: ActionServer daemon is already running."
+	else 
+		cd $BINDIR
+		./$ACTION_SERVER
+		echo "... Sekati ActionServer Daemonized!\n\n"
+		tail $LOG
+	fi
+	;;
+
+	stop)
+	if [ "$POLICY_IS_RUNNING" -eq "1" ] ; then
+       		kill -9 $POLICY_PROC
+		echo "... Undaemonized Socket Policy Server on port: $POLICY_PORT.\n\n"
+	else
+		echo "ERROR: Socket Policy Server $POLICY_PORT daemon is not running."
+ 	fi      	
+	echo "... Undaemonized ActionServer on port: $PORT.\n"
+	if [ "$IS_RUNNING" -eq "1" ] ; then
+		kill -9 $PROC
+		tail $LOG
+		echo "" > $LOG
+	else
+		echo "ERROR: ActionServer daemon is not running."
+	fi
+	;;
+
+	status)
+	if [ "$POLICY_IS_RUNNING" -eq "1" ] ; then
+		echo "Policy Server ($POLICY_PORT): YES"
+	else
+		 echo "Policy Server ($POLICY_PORT): NO"
+	fi
+	
+	if [ "$IS_RUNNING" -eq "1" ] ; then
+		echo "ActionServer ($PORT): YES"		
+	else 
+		echo "ActionServer ($PORT): NO"	
+	fi
+	;;
+
+	log)
+	echo "Viewing Server Log ...\n"
+	tail -f $LOG $POLICY_LOG
+	;;
+
+	*|?)
+	printUsage
+	exit 1
+	;;	
+esac
+
+exit 0
