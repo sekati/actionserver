@@ -21,8 +21,8 @@ The daemonized server opens `TCP port 2229` for incoming connections, awaits a `
 * Multi-user Flash Websites:
 	* To allow users to view each others cursors & clicks in realtime by acting as an ``XMLSocket`` server: [classic.sekati.com](http://classic.sekati.com).
 * Physical Computing Projects:
-	* To communicate between X-Bee Wireless Arduino's & a receiving Web Application: [metrics.sarkissianmason.com](http://metrics.sarkissianmason.com).
-	* To communicate between an SMS Text Message Gateway & an interactive projections: [Pathways SMS Installation](http://pathways.sarkissianmason.com).
+	* To communicate between X-Bee Wireless Arduino's & a receiving Web Application: [SM Office Metrics](http://www.sekati.com/work/sm-metrics).
+	* To communicate between an SMS Text Message Gateway & an interactive projections: [Pathways SMS Installation](http://www.sekati.com/work/pathways-installation).
 
 
 Server Details
@@ -52,7 +52,7 @@ _The following is key usage information to know about the `actionserver` & `sock
 Installation
 -------------------------------------
 
-1. Unarchive & in your terminal change to the actionserver directory: ``cd /path/to/sk-actionserver/``
+1. Unarchive & in your terminal change to the actionserver directory: ``cd /path/to/actionserver/``
 2. Compile the ActionServer for your environment: ``make``
 3. Install the ActionServer binaries: ``make install`` (you will be prompted for your ``root`` password for installation).
 4. Run the control script (see _Packaging List_ section below for more details): ``actionserverctl start``
