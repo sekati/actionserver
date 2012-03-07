@@ -1,3 +1,8 @@
+# Sekati ActionServer Makefile
+# @author Jason M Horwitz <hello@sekati.com>, Sekati LLC
+# @copyright (C) 2004-2012 Jason M Horwitz, Sekati LLC.
+# @license http://www.opensource.org/licenses/mit-license.php 
+
 CC=gcc
 CFLAGS=-I.
 DEPS=daemon.h logging.h
