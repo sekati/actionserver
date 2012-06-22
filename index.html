@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Actionserver by sekati</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Actionserver</h1>
+        <p>A light-weight C Socket Server which acts as the networking glue for multi-user &amp; hybrid technology applications.</p>
+        <p class="view"><a href="https://github.com/sekati/actionserver">View the Project on GitHub <small>sekati/actionserver</small></a></p>
+        <ul>
+          <li><a href="https://github.com/sekati/actionserver/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/sekati/actionserver/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/sekati/actionserver">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Sekati ActionServer</h1>
+
+<ul>
+<li>Version: 1.1.0</li>
+<li>Developer: Jason M Horwitz &amp; Marcus Stoeger</li>
+<li>Website: <a href="http://sekati.com">http://sekati.com</a>
+</li>
+<li>Copyright: © 2004-2011 Jason M Horwitz / Sekati LLC &amp; Marcus Stoeger,.</li>
+</ul><h2>Description</h2>
+
+<p>Sekati ActionServer is a light-weight, C based, TCP/IP <em>Echo</em> Socket Server. It functions as the <em>networking glue</em> for any <em>real-time multi-user</em> or <em>hybrid technology</em> application.</p>
+
+<p>The daemonized server opens <code>TCP port 2229</code> for incoming connections, awaits a <code>channel</code> join command (<em>this allows for a single server instance to host many different applications without message overflow</em>), then broadcasts any messages received from clients to all other connected clients in real-time.</p>
+
+<p><strong>The Sekati ActionServer has been successfully deployed in many different use-cases such as:</strong></p>
+
+<ul>
+<li>Multi-user Flash Websites:
+
+<ul>
+<li>To allow users to view each others cursors &amp; clicks in realtime by acting as an <code>XMLSocket</code> server: <a href="http://classic.sekati.com">classic.sekati.com</a>.</li>
+</ul>
+</li>
+<li>Physical Computing Projects:
+
+<ul>
+<li>To communicate between X-Bee Wireless Arduino's &amp; a receiving Web Application: <a href="http://www.sekati.com/work/sm-metrics">SM Office Metrics</a>.</li>
+<li>To communicate between an SMS Text Message Gateway &amp; an interactive projections: <a href="http://www.sekati.com/work/pathways-installation">Pathways SMS Installation</a>.</li>
+</ul>
+</li>
+</ul><h2>Server Details</h2>
+
+<p>In addition to the primary <code>actionserver</code> daemon &amp; <code>actionserverctl</code> control script - a second daemon <code>socketpolicyserver</code> is shipped/installed to support flash &amp; air applications which require a special <a href="http://www.lightsphere.com/dev/articles/flash_socket_policy.html">crossdomain XML policy</a> be served on a specific socket.</p>
+
+<p><em>The following is key usage information to know about the <code>actionserver</code> &amp; <code>socketpolicyserver</code> daemons:</em></p>
+
+<p><strong>ActionServer Daemon</strong> (defaults may be changed in <code>actionserver.c</code>)</p>
+
+<ul>
+<li>TCP Port: <code>2229</code>
+</li>
+<li>Max Clients: <code>500</code>
+</li>
+<li>Max Message Buffer: <code>4Kb</code>
+</li>
+<li>Log Channel: <code>*gimmeallchannel*</code> - this is a special control channel which a client may join in order to monitor traffic across all "channels".</li>
+<li>Log File: <code>/tmp/actionserver.log</code> - automatically rotated.</li>
+<li>Messages: <code>\0</code> - a <code>NULL</code> character is used to terminate each transmitted &amp; received message (<em>this is default behavior in AS3 &amp; Wiring / Processing</em>).</li>
+<li>Joining: When connecting to the actionserver the 1st message string defines your <code>"room"</code> or <code>channel</code>: you will only receive messages transmitted by other clients who have joined the same <code>"room"</code>. This allows you to use the server for multiple applications. __Please note this means immediately upon connecting your client must send a string defining it's room followed by the <code>\0</code> NULL character.</li>
+</ul><p><strong>SocketPolicyServer Daemon</strong></p>
+
+<ul>
+<li>TCP Port: <code>1843</code> - while the default adobe socket server is <code>843</code> running daemons on ports below <code>1024</code> requires running as the <code>root</code> user so we run on a high port (be sure to point any flash/air clients at the modified port: this is illustrated in the <code>example</code> application).</li>
+<li>Log File: <code>/tmp/socketpolicy.log</code>
+</li>
+</ul><h2>Installation</h2>
+
+<ol>
+<li>Unarchive &amp; in your terminal change to the actionserver directory: <code>cd /path/to/actionserver/</code>
+</li>
+<li>Compile the ActionServer for your environment: <code>make</code>
+</li>
+<li>Install the ActionServer binaries: <code>make install</code> (you will be prompted for your <code>root</code> password for installation).</li>
+<li>Run the control script (see <em>Packaging List</em> section below for more details): <code>actionserverctl start</code>
+
+<ul>
+<li>This will daemonize the <code>actionserver</code> &amp; <code>socketpolicyserver</code> making them ready for use.</li>
+</ul>
+</li>
+<li>To check the status of the servers type: <code>actionserverctl status</code>
+</li>
+<li>To follow the log files for the servers type: <code>actionscriptctl log</code>
+</li>
+<li>To stop the servers type: <code>actionscriptctl stop</code>
+</li>
+</ol><p><em>If you run in to trouble while compiling or installing the binaries you may run <code>make uninstall</code> to start over or type <code>make help</code> for more information.</em></p>
+
+<h2>Build Requirements</h2>
+
+<ul>
+<li>GNU Make</li>
+<li>GNU GCC Compiler</li>
+<li>Perl (<em>for companion socket policy server</em>)</li>
+</ul><h2>Runtime Requirements</h2>
+
+<p><strong><em>The ActionServer is an extremely light-weight &amp; low requirement 
+application meant to run on nearly any operating system:</em></strong></p>
+
+<ul>
+<li>Any unix-like Operating System (<em>happily compiles on most Linux, Unix, BSD, Mac OS X, et. al</em>)</li>
+<li>ActionServer should compile/run on Windows systems with only minor modifications; <em>CYGWin is recommended as a good place to start</em>.</li>
+</ul><h2>Packaging List</h2>
+
+<ul>
+<li><p><strong><em>Makefile</em></strong> - The ActionServer Makefile: see the <em>Installation</em> section above for more.</p></li>
+<li><p><strong><em>src/</em></strong> - ActionServer C source code.</p></li>
+<li><p><strong><em>examples/</em></strong> - Flash example app which illustrates connecting, sending, receiving &amp; disconnecting.</p></li>
+<li>
+<p><strong><em>bin/</em></strong> - runtime binaries.</p>
+
+<ul>
+<li>
+<strong><em>actionserverctl</em></strong> - Control interface designed to help the administrator control the functioning of the daemon.
+
+<ul>
+<li>
+<em>usage</em>: <code>./actionserverctl [ command ]</code>
+</li>
+<li>
+<code>start</code> - Start the ActionServer &amp; Socket Policy Server daemons.</li>
+<li>
+<code>stop</code> - Stop the ActionServer &amp; Socket Policy Server daemons.</li>
+<li>
+<code>status</code> - Displays a brief status report on the daemons statuses.</li>
+<li>
+<code>log</code> - Tail the log files for both daemons.</li>
+</ul>
+</li>
+<li>
+<strong><em>actionserver</em></strong> - The ActionServer Daemon: <em>do not run this application directly; instead use <code>actionserverctl</code></em>.</li>
+<li>
+<strong><em>socketpolicyserver</em></strong> - Adobe Socket Policy Server Daemon to support Flash &amp; Air applications.<br>
+</li>
+</ul>
+</li>
+</ul><h2>Changelog</h2>
+
+<pre><code>8/28/11 - *v1.1.0
+    - Added a proper Makefile
+    - Repackaged for Github release.
+    - Revises `actionscriptctl` control script
+    - Revised build.sh compilation script
+    - Revised channel password
+    - Added detailed README instructions (this document)
+    - added includes to string.h &amp; stdlib.h to surpress gcc warnings
+
+2/8/10 - *v1.0.9*
+    - Added proper LICENSE.txt
+    - added socketpolicyserver.pl &amp; integrated actionserverctl script
+    - pointed logging facility to /tmp/actionserver.log
+    - updated actionserverctl
+    - created new binary build
+    - updated actionscript examples.
+
+1/18/10 - *v.1.0.8*
+    - Changed message buffer to 8192 (8k) from 2048 (2k)
+    - Changed max users to 500 (from 100)
+</code></pre>
+
+<h2>License</h2>
+
+<p>Copyright © 2011 Jason M Horwitz / Sekati LLC &amp; Marcus Stoeger. All Rights Reserved.</p>
+
+<p>Released under the MIT License: <a href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a></p>
+
+<pre><code>The MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and 
+associated documentation files (the “Software”), to deal in the Software without restriction, 
+including without limitation the rights to use, copy, modify, merge, publish, distribute, 
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is 
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or 
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING 
+BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+</code></pre>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/sekati">sekati</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
