@@ -1,8 +1,6 @@
 language: ruby 
-install: make all 
-before_script: bin/actionserverctl start
+install: make
 script: make test
-after_script: bin/actionserverctl stop
 branches:
 	only:
 		- master
