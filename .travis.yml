@@ -2,11 +2,11 @@ language: ruby
 install: make
 script: make test
 branches:
-    only:
-        - master
+  only:
+    - master
 notifications:
-    recipients:
-        - dev@sekati.com
-    email:
-        on_success: change
-        on_failure: always
+  recipients:
+    - dev@sekati.com
+  email:
+    on_success: change
+    on_failure: always
