@@ -64,7 +64,7 @@ case $1 in
 
 	stop)
 	if [ "$POLICY_IS_RUNNING" -eq "1" ] ; then
-       		kill -9 $POLICY_PROC
+       	kill -9 $POLICY_PROC
 		echo "... Undaemonized Socket Policy Server on port: $POLICY_PORT.\n\n"
 	else
 		echo "ERROR: Socket Policy Server $POLICY_PORT daemon is not running."
@@ -100,9 +100,13 @@ case $1 in
 
 	test)
 	cd $ABS_PATH
-	$ACTION_SERVER
+	./$ACTION_SERVER
 	PROC=`ps waux | grep actionserver | grep -v grep | grep -v actionserverctl | awk '{ printf $2 }'`
-	ASCONN=`nc -z localhost $PORT | wc -l | awk '{ printf $1 }'`
+	if [ `uname` == "Darwin" ]; then
+		ASCONN=`nc -z localhost $PORT | grep -i succeeded | wc -l | awk '{ printf $1 }'`
+	else 
+		ASCONN=`nc -zv localhost $PORT 2>&1 | grep open | wc -l | awk '{ printf $1 }'`
+	fi
 	if [ "$ASCONN" -eq "0" ] ; then
 		echo "Test Failed: actionserver not running.\n"
 		exit 1
