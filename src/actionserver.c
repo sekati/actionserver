@@ -1,10 +1,10 @@
 /**
  * Sekati ActionServer
- * @version 1.1.0
+ * @version 1.1.1
  * @author Jason M Horwitz <hello@sekati.com>, Sekati LLC
  * @author Markus Stoeger <markus_stoeger@gmx.at>
  * @see http://www.sekati.com
- * @copyright (C) 2004-2011 Markus Stoeger, Jason M Horwitz, Sekati LLC. All Rights Reserved.
+ * @copyright (C) 2004-2012 Markus Stoeger, Jason M Horwitz, Sekati LLC. All Rights Reserved.
  * @license Released under the MIT License: http://www.opensource.org/licenses/mit-license.php 
  */
 

@@ -1,13 +1,13 @@
 #!/bin/sh
 # Sekati: actionserverctl - Control interface designed to help the administrator control the functioning of the ActionServer daemon.
 # @author jason m horwitz | sekati.com
-# Copyright (C) 2010 jason m horwitz, Sekat LLC. All Rights Reserved.
+# Copyright (C) 2010-2012 jason m horwitz, Sekat LLC. All Rights Reserved.
 
 NAME="ActionServerControl"
-VERSION="1.1.0"
+VERSION="1.1.1"
 DEL="******************************************************"
 
-#ABS_PATH=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+ABS_PATH=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
 BINDIR="/usr/local/bin/"
 ACTION_SERVER=actionserver
@@ -96,6 +96,21 @@ case $1 in
 	log)
 	echo "Viewing Server Log ...\n"
 	tail -f $LOG $POLICY_LOG
+	;;
+
+	test)
+	cd $ABS_PATH
+	$ACTION_SERVER
+	PROC=`ps waux | grep actionserver | grep -v grep | grep -v actionserverctl | awk '{ printf $2 }'`
+	ASCONN=`nc -z localhost $PORT | wc -l | awk '{ printf $1 }'`
+	if [ "$ASCONN" -eq "0" ] ; then
+		echo "Test Failed: actionserver not running.\n"
+		exit 1
+	else
+		echo "Test Passed: actionserver running ...\n"
+		kill -9 $PROC
+		exit 0	
+	fi
 	;;
 
 	*|?)

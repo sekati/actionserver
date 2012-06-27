@@ -1,0 +1,14 @@
+language: ruby 
+install: make all 
+before_script: bin/actionserverctl start
+script: make test
+after_script: bin/actionserverctl stop
+branches:
+	only:
+		- master
+notifications:
+	recipients:
+	    - dev@sekati.com
+	email:
+		on_success: change
+		on_failure: always

@@ -3,12 +3,12 @@ Sekati ActionServer
 ============================
 
 
-* Version: 1.1.0
+* Version: 1.1.1
 * Developer: Jason M Horwitz & Marcus Stoeger
 * Website: [http://sekati.com](http://sekati.com)
-* Copyright: © 2004-2011 Jason M Horwitz / Sekati LLC & Marcus Stoeger,.
+* Copyright: © 2004-2012 Jason M Horwitz / Sekati LLC & Marcus Stoeger,.
 
-  
+
 Description
 -------------------------------------
 
@@ -53,7 +53,7 @@ Installation
 -------------------------------------
 
 1. Unarchive & in your terminal change to the actionserver directory: ``cd /path/to/actionserver/``
-2. Compile the ActionServer for your environment: ``make``
+2. Compile the ActionServer for your environment: ``make`` (or ``make all` to compile, test & install at once)
 3. Install the ActionServer binaries: ``make install`` (you will be prompted for your ``root`` password for installation).
 4. Run the control script (see _Packaging List_ section below for more details): ``actionserverctl start``
 	* This will daemonize the ``actionserver`` & ``socketpolicyserver`` making them ready for use.
@@ -107,8 +107,14 @@ Packaging List
   
 Changelog
 -------------------------------------
+	
+	6/27/12 - *v1.1.1*
+		- Integrated [Travis Continuous Integration](travis-ci.org) testings with .travis.yml 
+		- Added `make test` to Makefile for travis-ci.
+		- Added actionserverctl test processing.
+		- Revised Readme markdown.
 
-	8/28/11 - *v1.1.0
+	8/28/11 - *v1.1.0*
 		- Added a proper Makefile
 		- Repackaged for Github release.
 		- Revises `actionscriptctl` control script

@@ -35,7 +35,10 @@ install:
 	@echo Run: ${IDIR}/actionserverctl to start the show!
 	@echo
 
-.PHONY: install
+.PHONY: install test
+
+test:
+	${ODIR}/actionserverctl test
 
 uninstall:
 	@echo
@@ -52,6 +55,7 @@ all:
 	@echo Make: Making All ...
 	@make clean
 	@make
+	@make test
 	@make install
 	@echo
 
@@ -61,6 +65,9 @@ help:
 	@echo
 	@echo Build:
 	@echo - Type 'make' to compile the actionserver daemon.
+	@echo
+	@echo Test:
+	@echo - Type 'make test' to run a basic connection test on the actionserver daemon.
 	@echo
 	@echo Install:
 	@echo - Type 'make install' to install the actionserver application binaries in: ${IDIR}.
