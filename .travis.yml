@@ -7,6 +7,6 @@ branches:
 notifications:
     recipients:
         - dev@sekati.com
-	email:
+    email:
         on_success: change
         on_failure: always
