@@ -2,7 +2,9 @@ language: ruby
 install:
   - make
   - make install
+before_script: /usr/local/bin/actionserverctl start
 script: make test
+after_script: /usr/local/bin/actionserverctl stop
 branches:
   only:
     - master
