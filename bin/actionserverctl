@@ -101,7 +101,6 @@ case $1 in
 	test)
 	cd $ABS_PATH
 	./$ACTION_SERVER
-	PROC=`ps waux | grep actionserver | grep -v grep | grep -v actionserverctl | awk '{ printf $2 }'`
 	if [ `uname` = "Darwin" ] ; then
 		ASCONN=`nc -z localhost $PORT | grep -i succeeded | wc -l | awk '{ printf $1 }'`
 	else 
@@ -112,7 +111,8 @@ case $1 in
 		exit 1
 	else
 		echo "Test Passed: actionserver running ...\n"
-		kill -9 $PROC
+		kill -9 `ps waux | grep actionserver | grep -v grep | grep -v actionserverctl | awk '{ printf $2 }'`
+		kill -9 `ps waux | grep socketpolicyserver | grep -v grep | awk '{ printf $2 }'`
 		exit 0	
 	fi
 	;;
