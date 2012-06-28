@@ -99,21 +99,17 @@ case $1 in
 	;;
 
 	test)
-	cd $ABS_PATH
-	./$ACTION_SERVER
-	if [ `uname` = "Darwin" ] ; then
-		ASCONN=`nc -z localhost $PORT | grep -i succeeded | wc -l | awk '{ printf $1 }'`
-	else 
-		ASCONN=`nc -zv localhost $PORT 2>&1 | grep open | wc -l | awk '{ printf $1 }'`
-	fi
-	if [ "$ASCONN" -eq "0" ] ; then
+	#cd $ABS_PATH
+	#./$ACTION_SERVER
+	STATUS=`$0 status | grep YES | wc -l | awk '{ printf $1 }'`
+	if [ "$STATUS" -eq "0" ] ; then
 		echo "Test Failed: actionserver daemon not running.\n"
 		exit 1
 	else
 		echo "Test Passed: actionserver daemon installed & running properly!\n"
-		ASPROC=`ps waux | grep actionserver | grep -v grep | grep -v actionserverctl | awk '{ printf $2 }'`
-		PSPROC=`ps waux | grep socketpolicyserver | grep -v grep | awk '{ printf $2 }'`
-		kill -9 $ASPROC $PSPROC
+		#ASPROC=`ps waux | grep actionserver | grep -v grep | grep -v actionserverctl | awk '{ printf $2 }'`
+		#PSPROC=`ps waux | grep socketpolicyserver | grep -v grep | awk '{ printf $2 }'`
+		#kill -9 $ASPROC $PSPROC
 		exit 0	
 	fi
 	;;
