@@ -102,7 +102,7 @@ case $1 in
 	cd $ABS_PATH
 	./$ACTION_SERVER
 	PROC=`ps waux | grep actionserver | grep -v grep | grep -v actionserverctl | awk '{ printf $2 }'`
-	if [ `uname` == "Darwin" ]; then
+	if [ `uname` = "Darwin" ] ; then
 		ASCONN=`nc -z localhost $PORT | grep -i succeeded | wc -l | awk '{ printf $1 }'`
 	else 
 		ASCONN=`nc -zv localhost $PORT 2>&1 | grep open | wc -l | awk '{ printf $1 }'`
