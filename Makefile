@@ -38,7 +38,9 @@ install:
 .PHONY: install test
 
 test:
+	${ODIR}/actionserver
 	${ODIR}/actionserverctl test
+	${ODIR}/actionserverctl stop
 
 uninstall:
 	@echo
