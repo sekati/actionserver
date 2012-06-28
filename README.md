@@ -1,5 +1,5 @@
 
-Sekati ActionServer
+Sekati ActionServer [![Build Status](https://secure.travis-ci.org/sekati/actionserver.png)](http://travis-ci.org/sekati/actionserver)
 ============================
 
 
