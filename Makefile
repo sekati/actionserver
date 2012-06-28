@@ -38,7 +38,8 @@ install:
 .PHONY: install test
 
 test:
-	${ODIR}/actionserverctl start
+	@echo 
+	@echo Make Test ...
 	${ODIR}/actionserverctl test
 
 uninstall:
@@ -56,8 +57,8 @@ all:
 	@echo Make: Making All ...
 	@make clean
 	@make
-	@make test
 	@make install
+	@make test
 	@echo
 
 help:
