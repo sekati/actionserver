@@ -38,8 +38,6 @@ install:
 .PHONY: install test
 
 test:
-	@echo 
-	@echo Make Test ...
 	${ODIR}/actionserverctl test
 
 uninstall:

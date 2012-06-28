@@ -99,7 +99,7 @@ case $1 in
 	;;
 
 	test)
-	cd $BINDIR
+	cd $ABS_PATH
 	./$ACTION_SERVER
 	if [ `uname` = "Darwin" ] ; then
 		ASCONN=`nc -z localhost $PORT | grep -i succeeded | wc -l | awk '{ printf $1 }'`
