@@ -1,5 +1,7 @@
 language: ruby 
-install: make all
+install:
+  - make
+  - make install
 script: make test
 branches:
   only:
